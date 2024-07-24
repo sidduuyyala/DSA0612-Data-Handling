@@ -1,0 +1,29 @@
+# Load necessary library
+library(ggplot2)
+
+# Create the data frame
+data <- data.frame(
+  Product = c("A", "B", "C", "D", "E"),
+  Price = c(50, 70, 60, 45, 55),
+  Rating = c(4.2, 3.8, 4.0, 4.5, 3.9),
+  AgeGroup = c("25-35", "35-45", "18-25", "45-55", "25-35")
+)
+
+# Print the data frame
+print(data)
+
+# Summary statistics
+summary(data)
+
+# Scatter plot of Price vs Rating
+ggplot(data, aes(x = Price, y = Rating, color = AgeGroup)) +
+  geom_point(size = 4) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  labs(title = "Scatter plot of Price vs Rating", x = "Price ($)", y = "Rating (out of 5)") +
+  theme_minimal()
+
+# Boxplot of Rating by Age Group
+ggplot(data, aes(x = AgeGroup, y = Rating, fill = AgeGroup)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Ratings by Age Group", x = "Age Group", y = "Rating (out of 5)") +
+  theme_minimal()
