@@ -1,0 +1,21 @@
+# Load the plotly library
+library(plotly)
+
+# Create the data frame
+data <- data.frame(
+  Location = c("A", "B", "C", "D", "E"),
+  Temperature = c(15, 20, 18, 12, 17),
+  Humidity = c(65, 70, 68, 60, 72),
+  CO2_Levels = c(400, 450, 420, 380, 430)
+)
+
+# Print the data
+print(data)
+
+# Create a 3D scatter plot
+plot_ly(data, x = ~Temperature, y = ~Humidity, z = ~CO2_Levels, type = 'scatter3d', mode = 'markers',
+        marker = list(size = 5, color = ~CO2_Levels, colorscale = 'Viridis', showscale = TRUE)) %>%
+  layout(title = "3D Scatter Plot of CO2 Levels",
+         scene = list(xaxis = list(title = "Temperature (°C)"),
+                      yaxis = list(title = "Humidity (%)"),
+                      zaxis = list(title = "CO2 Levels (ppm)")))
