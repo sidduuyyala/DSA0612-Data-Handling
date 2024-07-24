@@ -1,0 +1,28 @@
+# Install and load necessary libraries
+install.packages("plotly")
+install.packages("akima")
+library(plotly)
+library(akima)
+
+# Create the data frame
+data <- data.frame(
+  Product = c("A", "B", "C", "D", "E"),
+  Price = c(50, 70, 60, 45, 55),
+  Rating = c(4.2, 3.8, 4.0, 4.5, 3.9),
+  AgeGroup = c("25-35", "35-45", "18-25", "45-55", "25-35")
+)
+
+# Encode AgeGroup as ordinal values
+age_group_map <- c("18-25" = 1, "25-35" = 2, "35-45" = 3, "45-55" = 4)
+data$AgeGroupEncoded <- as.numeric(factor(data$AgeGroup, levels = names(age_group_map)))
+
+# Interpolate data to create a surface
+interp_data <- with(data, interp(x = Price, y = AgeGroupEncoded, z = Rating, duplicate = "mean"))
+
+# Create the 3D surface plot
+plot_ly(z = interp_data$z, x = interp_data$x, y = interp_data$y, type = "surface") %>%
+  layout(scene = list(
+    xaxis = list(title = "Price ($)"),
+    yaxis = list(title = "Age Group (encoded)"),
+    zaxis = list(title = "Rating (out of 5)")),
+    title = "3D Surface Plot of Price, Rating, and Age Group (Encoded)")
