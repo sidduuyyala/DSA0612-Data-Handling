@@ -1,0 +1,21 @@
+# Load necessary libraries
+library(ggplot2)
+library(GGally)
+
+# Create a data frame with the weather data
+weather_data <- data.frame(
+  Date = as.Date(c('2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05')),
+  Temperature = c(10, 12, 8, 15, 14),
+  Humidity = c(75, 70, 80, 65, 72),
+  WindSpeed = c(15, 12, 18, 20, 16)
+)
+
+# Calculate correlation matrix
+correlation_matrix <- cor(weather_data[, -1])
+print(correlation_matrix)
+
+# Pairwise scatter plots with linear regression lines
+ggpairs(weather_data[, -1], 
+        lower = list(continuous = wrap("smooth", method = "lm", se = FALSE)), 
+        upper = list(continuous = wrap("cor", size = 5)),
+        title = "Pairwise Scatter Plots with Correlation Coefficients")
