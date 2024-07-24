@@ -1,0 +1,24 @@
+# Load the plotly library
+library(plotly)
+
+# Create the data frame
+data <- data.frame(
+  Student = c('A', 'B', 'C', 'D', 'E'),
+  Math_Score = c(85, 72, 90, 78, 88),
+  Science_Score = c(78, 85, 80, 75, 82),
+  Attendance = c(95, 92, 98, 85, 93)
+)
+
+# Create a 3D scatter plot
+fig <- plot_ly(data, x = ~Math_Score, y = ~Science_Score, z = ~Attendance, 
+               type = 'scatter3d', mode = 'markers', marker = list(size = 5))
+
+# Add axis labels and title
+fig <- fig %>% layout(scene = list(
+  xaxis = list(title = 'Math Score'),
+  yaxis = list(title = 'Science Score'),
+  zaxis = list(title = 'Attendance (%)'),
+  title = '3D Scatter Plot of Academic Performance Data'))
+
+# Show the plot
+fig
