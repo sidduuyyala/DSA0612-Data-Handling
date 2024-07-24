@@ -1,0 +1,47 @@
+# Load the necessary library
+library(cluster)
+
+# Prepare the data for clustering
+data_matrix <- data[, c("Volume_Traded", "Market_Cap", "Stock_Price")]
+
+# Calculate the Euclidean distance matrix
+dist_matrix <- dist(data_matrix)
+
+# Perform hierarchical clustering
+hc <- hclust(dist_matrix)
+
+# Plot the dendrogram
+plot(hc, main = "Dendrogram of Hierarchical Clustering")
+
+# Cut the dendrogram to create clusters
+clusters <- cutree(hc, k = 2) # Adjust the number of clusters (k) as needed
+
+# Add cluster information to the data frame
+data$Cluster <- as.factor(clusters)
+
+# Plot the 3D scatter plot with clusters
+fig <- plot_ly(
+  data,
+  x = ~Volume_Traded,
+  y = ~Market_Cap,
+  z = ~Stock_Price,
+  color = ~Cluster,
+  colors = c('red', 'blue'), # Customize colors
+  type = 'scatter3d',
+  mode = 'markers',
+  marker = list(size = 5)
+)
+
+# Add labels and title
+fig <- fig %>%
+  layout(
+    scene = list(
+      xaxis = list(title = 'Volume Traded (millions)'),
+      yaxis = list(title = 'Market Cap ($)'),
+      zaxis = list(title = 'Stock Price ($)')
+    ),
+    title = '3D Scatter Plot with Clusters'
+  )
+
+# Show the plot
+fig
