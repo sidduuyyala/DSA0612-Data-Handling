@@ -1,0 +1,22 @@
+library(plotly)
+# Create the data frame
+data <- data.frame(
+  Student = c("A", "B", "C", "D", "E"),
+  Math_Score = c(85, 72, 90, 78, 88),
+  Science_Score = c(78, 85, 80, 75, 82),
+  Attendance = c(95, 92, 98, 85, 93)
+)
+# 3D plot of Science Scores vs Math Scores and Attendance
+fig1 <- plot_ly(data, x = ~Math_Score, y = ~Attendance, z = ~Science_Score, type = "scatter3d", mode = "markers",
+                marker = list(size = 5, color = ~Science_Score, colorscale = "Viridis", showscale = TRUE))
+fig1 <- fig1 %>% layout(scene = list(xaxis = list(title = 'Math Score'),
+                                     yaxis = list(title = 'Attendance'),
+                                     zaxis = list(title = 'Science Score')))
+fig1
+# 3D plot of Science Scores vs Attendance and Math Scores
+fig2 <- plot_ly(data, x = ~Attendance, y = ~Math_Score, z = ~Science_Score, type = "scatter3d", mode = "markers",
+                marker = list(size = 5, color = ~Science_Score, colorscale = "Viridis", showscale = TRUE))
+fig2 <- fig2 %>% layout(scene = list(xaxis = list(title = 'Attendance'),
+                                     yaxis = list(title = 'Math Score'),
+                                     zaxis = list(title = 'Science Score')))
+fig2
