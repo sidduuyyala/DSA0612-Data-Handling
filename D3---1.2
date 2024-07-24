@@ -1,0 +1,18 @@
+# Load necessary libraries
+library(ggplot2)
+
+# Create a data frame with the weather data
+weather_data <- data.frame(
+  Date = as.Date(c('2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05')),
+  Temperature = c(10, 12, 8, 15, 14),
+  Humidity = c(75, 70, 80, 65, 72),
+  WindSpeed = c(15, 12, 18, 20, 16)
+)
+
+# Scatter plot of Wind Speed vs Humidity with Temperature as color
+ggplot(weather_data, aes(x = WindSpeed, y = Humidity, color = Temperature)) +
+  geom_point(size = 4) +
+  scale_color_gradient(low = "blue", high = "red") +
+  labs(title = 'Wind Speed vs Humidity with Temperature as Color',
+       x = 'Wind Speed (km/h)', y = 'Humidity (%)', color = 'Temperature (°C)') +
+  theme_minimal()
