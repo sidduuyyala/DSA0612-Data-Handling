@@ -1,0 +1,49 @@
+# Install and load plotly package if not already installed
+if (!requireNamespace("plotly", quietly = TRUE)) {
+  install.packages("plotly")
+}
+library(plotly)
+
+# Create the dataset
+data <- data.frame(
+  Location = c("A", "B", "C", "D", "E"),
+  Temperature = c(15, 20, 18, 12, 17),
+  Humidity = c(65, 70, 68, 60, 72),
+  CO2_Levels = c(400, 450, 420, 380, 430)
+)
+
+# Create a 3D scatter plot for CO2 levels against Temperature and Humidity
+plot_temp_humidity <- plot_ly(data, x = ~Temperature, y = ~Humidity, z = ~CO2_Levels, type = 'scatter3d', mode = 'markers') %>%
+  layout(
+    title = "CO2 Levels vs Temperature and Humidity",
+    scene = list(
+      xaxis = list(title = "Temperature (°C)"),
+      yaxis = list(title = "Humidity (%)"),
+      zaxis = list(title = "CO2 Levels (ppm)")
+    )
+  )
+
+# Create a 3D scatter plot for CO2 levels against Temperature only
+plot_temp <- plot_ly(data, x = ~Temperature, y = ~CO2_Levels, z = ~Humidity, type = 'scatter3d', mode = 'markers') %>%
+  layout(
+    title = "CO2 Levels vs Temperature",
+    scene = list(
+      xaxis = list(title = "Temperature (°C)"),
+      yaxis = list(title = "CO2 Levels (ppm)"),
+      zaxis = list(title = "Humidity (%)")
+    )
+  )
+
+# Create a 3D scatter plot for CO2 levels against Humidity only
+plot_humidity <- plot_ly(data, x = ~Humidity, y = ~CO2_Levels, z = ~Temperature, type = 'scatter3d', mode = 'markers') %>%
+  layout(
+    title = "CO2 Levels vs Humidity",
+    scene = list(
+      xaxis = list(title = "Humidity (%)"),
+      yaxis = list(title = "CO2 Levels (ppm)"),
+      zaxis = list(title = "Temperature (°C)")
+    )
+  )
+
+# Show the plots
+subplot(plot_temp_humidity, plot_temp, plot_humidity, nrows = 1)
