@@ -1,0 +1,35 @@
+# Install and load plotly package if not already installed
+if (!requireNamespace("plotly", quietly = TRUE)) {
+  install.packages("plotly")
+}
+library(plotly)
+
+# Create the dataset
+data <- data.frame(
+  Location = c("A", "B", "C", "D", "E"),
+  Temperature = c(15, 20, 18, 12, 17),
+  Humidity = c(65, 70, 68, 60, 72),
+  CO2_Levels = c(400, 450, 420, 380, 430)
+)
+
+# Create a 3D scatter plot
+scatter_plot <- plot_ly(data, x = ~Temperature, y = ~Humidity, z = ~CO2_Levels, type = 'scatter3d', mode = 'markers')
+
+# Create a 3D surface plot
+surface_plot <- plot_ly(data, x = ~Temperature, y = ~Humidity, z = ~CO2_Levels, type = 'mesh3d', opacity = 0.5)
+
+# Combine the scatter plot and the surface plot
+fig <- subplot(scatter_plot, surface_plot)
+
+# Set plot title and axis labels
+fig <- fig %>% layout(
+  title = "CO2 Levels Variation with Temperature and Humidity",
+  scene = list(
+    xaxis = list(title = "Temperature (°C)"),
+    yaxis = list(title = "Humidity (%)"),
+    zaxis = list(title = "CO2 Levels (ppm)")
+  )
+)
+
+# Show the plot
+fig
