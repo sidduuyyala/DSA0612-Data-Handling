@@ -1,0 +1,28 @@
+library(plotly)
+
+# Create the data frame
+data <- data.frame(
+  Product = c("A", "B", "C", "D", "E"),
+  Price = c(50, 70, 60, 45, 55),
+  Rating = c(4.2, 3.8, 4.0, 4.5, 3.9),
+  AgeGroup = c("25-35", "35-45", "18-25", "45-55", "25-35")
+)
+
+# Encode AgeGroup as ordinal values
+age_group_map <- c("18-25" = 1, "25-35" = 2, "35-45" = 3, "45-55" = 4)
+data$AgeGroupEncoded <- as.numeric(factor(data$AgeGroup, levels = names(age_group_map)))
+
+# Compute correlation matrix
+correlation_matrix <- cor(data[, c("Price", "Rating", "AgeGroupEncoded")])
+print(correlation_matrix)
+
+# Define a color for each age group
+data$Color <- as.factor(data$AgeGroup)
+
+# Create the 3D scatter plot
+plot_ly(data, x = ~Price, y = ~Rating, z = ~AgeGroupEncoded, type = 'scatter3d', mode = 'markers', 
+        marker = list(size = 5, color = ~Color, colorscale = 'Viridis')) %>%
+  layout(scene = list(xaxis = list(title = 'Price ($)'),
+                      yaxis = list(title = 'Rating (out of 5)'),
+                      zaxis = list(title = 'Age Group (encoded)')),
+         title = "3D Scatter Plot of Price, Rating, and Age Group (Encoded)")
