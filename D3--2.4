@@ -1,0 +1,20 @@
+
+library(plotly)
+
+# Generate synthetic data
+set.seed(123)  # For reproducibility
+stock_prices <- seq(90, 110, length.out = 10)  # Sequence of stock prices
+volumes <- seq(2, 4, length.out = 10)  # Sequence of volumes
+market_caps <- outer(stock_prices, volumes, function(x, y) 0.8 * x * y + rnorm(1, 0, 5))  # Market cap values with noise
+
+# Create a data frame
+data <- expand.grid(Stock_Price = stock_prices, Volume_Traded = volumes)  # Create a grid of stock prices and volumes
+data$Market_Cap <- as.vector(market_caps)  # Add market cap values to the data frame
+
+# Create the 3D surface plot
+plot_ly(data, x = ~Stock_Price, y = ~Volume_Traded, z = ~Market_Cap, type = "surface") %>%
+  layout(scene = list(
+    xaxis = list(title = 'Stock Price'),
+    yaxis = list(title = 'Volume Traded'),
+    zaxis = list(title = 'Market Cap')
+  ))
