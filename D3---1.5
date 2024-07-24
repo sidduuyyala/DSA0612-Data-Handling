@@ -1,0 +1,35 @@
+# Load necessary library
+library(plotly)
+
+# Create the data frame
+data <- data.frame(
+  Date = as.Date(c('2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05')),
+  Temperature = c(10, 12, 8, 15, 14),
+  Humidity = c(75, 70, 80, 65, 72),
+  Wind_Speed = c(15, 12, 18, 20, 16)
+)
+
+# 3D scatter plot: Temperature vs Humidity and Wind Speed
+plot1 <- plot_ly(data, x = ~Humidity, y = ~Wind_Speed, z = ~Temperature, type = 'scatter3d', mode = 'markers') %>%
+  layout(scene = list(xaxis = list(title = 'Humidity (%)'),
+                      yaxis = list(title = 'Wind Speed (km/h)'),
+                      zaxis = list(title = 'Temperature (°C)')),
+         title = 'Temperature vs Humidity and Wind Speed')
+
+# 3D scatter plot: Temperature vs Humidity
+plot2 <- plot_ly(data, x = ~Humidity, y = ~Temperature, z = ~Wind_Speed, type = 'scatter3d', mode = 'markers') %>%
+  layout(scene = list(xaxis = list(title = 'Humidity (%)'),
+                      yaxis = list(title = 'Temperature (°C)'),
+                      zaxis = list(title = 'Wind Speed (km/h)')),
+         title = 'Temperature vs Humidity')
+
+# 3D scatter plot: Temperature vs Wind Speed
+plot3 <- plot_ly(data, x = ~Wind_Speed, y = ~Temperature, z = ~Humidity, type = 'scatter3d', mode = 'markers') %>%
+  layout(scene = list(xaxis = list(title = 'Wind Speed (km/h)'),
+                      yaxis = list(title = 'Temperature (°C)'),
+                      zaxis = list(title = 'Humidity (%)')),
+         title = 'Temperature vs Wind Speed')
+
+# Display plots side by side
+subplot(plot1, plot2, plot3, nrows = 1, margin = 0.05) %>%
+  layout(title = 'Comparative 3D Plots: Temperature vs Humidity and Wind Speed')
